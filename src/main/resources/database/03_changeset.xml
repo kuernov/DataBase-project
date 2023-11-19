@@ -1,0 +1,7 @@
+<changeSet id="3" author="malyjasiak">
+        <addForeignKeyConstraint constraintName="fk_category2product"
+                                 baseTableName="products"
+                                 baseColumnNames="category_id"
+                                 referencedTableName="categories"
+                                 referencedColumnNames="id"/>
+    </changeSet>

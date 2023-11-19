@@ -14,4 +14,11 @@ public class ProductDto {
     private @NotNull double price;
     private @NotNull String description;
     private @NotNull Integer categoryId;
+
+    public ProductDto(String name, double price, String description, Integer categoryId){
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.categoryId = categoryId;
+    }
 }

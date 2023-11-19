@@ -23,6 +23,13 @@ public class ProductService {
         product.setPrice(productDto.getPrice());
         product.setCategory(category);
         productRepository.save(product);
+//        Product product = Product.builder()
+//                .name(productDto.getName())
+//                .price(productDto.getPrice())
+//                .description(productDto.getDescription())
+//                .category(category)
+//                .build();
+//        productRepository.save(product);
     }
     public ProductDto getProductDto(Product product) {
         ProductDto productDto = new ProductDto();
@@ -51,7 +58,6 @@ public class ProductService {
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         productRepository.save(product);
-
-
     }
+
 }
