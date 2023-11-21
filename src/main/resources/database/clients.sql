@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset malyjasiak:2
+--changeset malyjasiak:1
 create table clients(
                         id serial not null primary key,
                         name varchar not null,
