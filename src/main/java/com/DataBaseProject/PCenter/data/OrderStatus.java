@@ -1,2 +1,5 @@
-package com.DataBaseProject.PCenter.data;public class OrderStatus {
+package com.DataBaseProject.PCenter.data;
+
+public enum OrderStatus {
+    PAID
 }

@@ -2,7 +2,6 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Category;
-import com.DataBaseProject.PCenter.data.Product;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.repository.CategoryRepository;
 import com.DataBaseProject.PCenter.service.ProductService;
