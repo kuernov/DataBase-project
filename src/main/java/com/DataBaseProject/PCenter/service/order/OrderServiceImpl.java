@@ -1,6 +1,7 @@
 package com.DataBaseProject.PCenter.service.order;
 
 import com.DataBaseProject.PCenter.data.Order;
+import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,9 +19,9 @@ public class OrderServiceImpl implements OrderService {
         return this.orderRepository.findAll();
     }
     @Override
-    public Order create(Order order){
+    public Order create(Order order, User user){
         order.setDateCreated(LocalDate.now());
-
+        order.setUser(user);
         return this.orderRepository.save(order);
     }
     @Override

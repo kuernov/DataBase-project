@@ -3,6 +3,8 @@ package com.DataBaseProject.PCenter.data;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -15,8 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private double price;
+    private BigDecimal price;
     private String description;
+    private String imageURL;
     @ManyToOne
     @JoinColumn(name = "category_id")
     Category category;

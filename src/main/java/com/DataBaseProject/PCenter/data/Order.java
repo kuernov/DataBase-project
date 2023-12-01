@@ -19,12 +19,16 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dateCreated;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private String status;
+
     @JsonManagedReference
     @OneToMany(mappedBy = "pk.order")
     @Valid

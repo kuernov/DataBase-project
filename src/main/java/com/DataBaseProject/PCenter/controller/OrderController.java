@@ -3,6 +3,7 @@ package com.DataBaseProject.PCenter.controller;
 import com.DataBaseProject.PCenter.data.Order;
 import com.DataBaseProject.PCenter.data.OrderProduct;
 import com.DataBaseProject.PCenter.data.OrderStatus;
+import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.OrderProductDto;
 import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
 import com.DataBaseProject.PCenter.service.order.OrderProductService;
@@ -37,12 +38,12 @@ public class OrderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Order> create(@RequestBody OrderForm form){
+    public ResponseEntity<Order> create(@RequestBody OrderForm form, User user){
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductExistence(formDtos);
         Order order = new Order();
         order.setStatus(OrderStatus.PAID.name());
-        this.orderService.create(order);
+        this.orderService.create(order, user);
 
         List<OrderProduct> orderProducts = new ArrayList<>();
         for (OrderProductDto dto : formDtos){
