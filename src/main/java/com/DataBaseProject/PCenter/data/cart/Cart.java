@@ -25,17 +25,18 @@ import java.util.List;
 @Table(name = "carts")
 public class Cart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pk.cart")
+    @OneToMany(mappedBy = "pk.user")
     @Valid
     private List<CartProduct> cartProducts = new ArrayList<>();
+
+    public Cart(User user){
+        this.user = user;
+    }
     @Transient
     public BigDecimal getTotalCartPrice(){
         BigDecimal sum = new BigDecimal("0");

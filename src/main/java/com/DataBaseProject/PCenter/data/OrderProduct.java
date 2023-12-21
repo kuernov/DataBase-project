@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Entity
 @EqualsAndHashCode
 @Getter
@@ -33,8 +35,8 @@ public class OrderProduct {
     }
 
     @Transient
-    public Double getTotalPrice() {
-        return getProduct().getPrice() * getQuantity();
+    public BigDecimal getTotalPrice() {
+        return getProduct().getPrice().multiply(BigDecimal.valueOf(getQuantity()));
     }
 
 }

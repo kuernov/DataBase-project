@@ -25,10 +25,10 @@ public class CartProduct {
     @Column(nullable = false)
     private Integer quantity;
 
-    public CartProduct(Product product, Cart cart, Integer quantity){
+    public CartProduct(Product product, User user, Integer quantity){
         pk = new CartProductPK();
         pk.setProduct(product);
-        pk.setCart(cart);
+        pk.setUser(user);
         this.quantity = quantity;
     }
     @Transient

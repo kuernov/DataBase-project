@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,11 @@ public class Order {
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
     @Transient
-    public Double getTotalOrderPrice(){
-        double sum = 0D;
+    public BigDecimal getTotalOrderPrice(){
+        BigDecimal sum = new BigDecimal("0");
         List<OrderProduct> orderProducts = getOrderProducts();
         for (OrderProduct op : orderProducts){
-            sum+=op.getTotalPrice();
+            sum=op.getTotalPrice();
         }
         return sum;
     }

@@ -3,7 +3,9 @@ package com.DataBaseProject.PCenter.service.cart;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.data.cart.Cart;
 import com.DataBaseProject.PCenter.repository.CartRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CartServiceImpl implements CartService {
     private CartRepository cartRepository;
 

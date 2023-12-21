@@ -19,8 +19,8 @@ import java.io.Serializable;
 public class CartProductPK implements Serializable {
     @ManyToOne(optional = false)
     @JsonBackReference
-    @JoinColumn(name = "cart_id")
-    private Cart cart;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "product_id")
