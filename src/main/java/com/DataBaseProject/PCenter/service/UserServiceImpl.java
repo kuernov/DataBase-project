@@ -3,11 +3,12 @@ package com.DataBaseProject.PCenter.service;
 import com.DataBaseProject.PCenter.dto.user.UserDto;
 import com.DataBaseProject.PCenter.repository.RoleRepository;
 import com.DataBaseProject.PCenter.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.data.Role;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,15 +33,15 @@ public class UserServiceImpl implements UserService{
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
         // role do rozbudowania
-        Role role = roleRepository.findByName("ADMIN");
+        Role role = roleRepository.findByName("ROLE_ADMIN");
         if (role == null){
             role = checkRoleExist();
 
         }
-        user.setRoles(List.of(role));
+        user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
 
@@ -67,7 +68,7 @@ public class UserServiceImpl implements UserService{
 
     private Role checkRoleExist(){
         Role role = new Role();
-        role.setName("ADMIN");
+        role.setName("ROLE_ADMIN");
         return roleRepository.save(role);
     }
 }
