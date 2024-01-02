@@ -23,7 +23,7 @@ public class ProductController  {
     CategoryRepository categoryRepository;
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> createProduct(@RequestBody ProductDto productDto){
-        Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategoryId());
+        Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
         if(!optionalCategory.isPresent())
             return new ResponseEntity<>(new ApiResponse(false, "category does not exists"), HttpStatus.BAD_REQUEST);
         productService.createProduct(productDto, optionalCategory.get());
@@ -36,7 +36,7 @@ public class ProductController  {
     }
     @PostMapping("/update/{productId}")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productId") Integer productId, @RequestBody ProductDto productDto) throws Exception{
-        Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategoryId());
+        Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
         if (optionalCategory.isPresent())
             return new ResponseEntity<>(new ApiResponse(false, "category does not exists"),HttpStatus.BAD_REQUEST);
         productService.updateProduct(productDto,productId);

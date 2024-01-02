@@ -20,6 +20,7 @@ public class Product {
     private BigDecimal price;
     private String description;
     private String imageURL;
+    private int currentQuantity;
     @ManyToOne
     @JoinColumn(name = "category_id")
     Category category;

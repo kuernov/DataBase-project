@@ -1,7 +1,6 @@
 package com.DataBaseProject.PCenter.dto;
 
 import com.DataBaseProject.PCenter.data.Product;
-import com.DataBaseProject.PCenter.data.User;
 import lombok.Getter;
 import lombok.Setter;
 

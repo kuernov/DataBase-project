@@ -1,12 +1,13 @@
 package com.DataBaseProject.PCenter.service;
-import com.DataBaseProject.PCenter.data.User;
-import com.DataBaseProject.PCenter.dto.user.UserDto;
 
-import java.util.List;
+import com.DataBaseProject.PCenter.data.User;
+import com.DataBaseProject.PCenter.dto.UserDto;
 
 public interface UserService {
-    void saveUser(UserDto userDto);
+    User save(UserDto userDto);
     User findByEmail(String email);
+    User update(UserDto userDto);
+    User changePass(UserDto userDto);
+    UserDto getUser(String email);
 
-    List<UserDto> findAllUsers();
 }

@@ -1,47 +1,28 @@
 package com.DataBaseProject.PCenter.service;
 
-import com.DataBaseProject.PCenter.dto.user.UserDto;
+import com.DataBaseProject.PCenter.data.User;
+import com.DataBaseProject.PCenter.dto.UserDto;
 import com.DataBaseProject.PCenter.repository.RoleRepository;
 import com.DataBaseProject.PCenter.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.DataBaseProject.PCenter.data.User;
-import com.DataBaseProject.PCenter.data.Role;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository,
-                           RoleRepository roleRepository,
-                           PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Override
-    public void saveUser(UserDto userDto){
+    public User save(UserDto userDto){
         User user = new User();
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword));
-
-        // role do rozbudowania
-        Role role = roleRepository.findByName("ADMIN");
-        if (role == null){
-            role = checkRoleExist();
-
-        }
-        user.setRoles(List.of(role));
-        userRepository.save(user);
+        user.setFirstname(userDto.getFirstName());
+        user.setLastname(userDto.getLastName());
+        user.setPassword(userDto.getPassword());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAddress(userDto.getAddress());
+        return userRepository.save(user);
     }
 
     @Override
@@ -50,24 +31,31 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDto> findAllUsers(){
-        List<User> users = userRepository.findAll();
-        return users.stream()
-                .map((user) -> mapToUserDto(user))
-                .collect(Collectors.toList());
-    }
-
-    private UserDto mapToUserDto(User user){
+    public UserDto getUser(String email){
         UserDto userDto = new UserDto();
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
+        User user = userRepository.findByEmail(email);
+        userDto.setFirstName(user.getFirstname());
+        userDto.setLastName(user.getLastname());
+        userDto.setPassword(user.getPassword());
+        userDto.setAddress(user.getAddress());
+        userDto.setPhoneNumber(user.getPhoneNumber());
         return userDto;
     }
 
-    private Role checkRoleExist(){
-        Role role = new Role();
-        role.setName("ADMIN");
-        return roleRepository.save(role);
+    @Override
+    public User update(UserDto userDto){
+        User user = userRepository.findByEmail(userDto.getEmail());
+        user.setFirstname(userDto.getFirstName());
+        user.setLastname(userDto.getLastName());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+        user.setAddress(userDto.getAddress());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User changePass(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail());
+        user.setPassword(userDto.getPassword());
+        return userRepository.save(user);
     }
 }

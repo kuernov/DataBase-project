@@ -17,9 +17,9 @@ import java.util.List;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id")
     private Integer id;
     private String name;
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+
 
 }
