@@ -7,6 +7,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Service
@@ -15,12 +16,13 @@ import java.time.LocalDate;
 public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     @Override
-    public Iterable<Order> getAllOrders(){
+    public Iterable<Order> getAllOrders() {
+        // Mo
         return this.orderRepository.findAll();
     }
     @Override
     public Order create(Order order, User user){
-        order.setDateCreated(LocalDate.now());
+        order.setDateCreated(Instant.now());
         order.setUser(user);
         return this.orderRepository.save(order);
     }

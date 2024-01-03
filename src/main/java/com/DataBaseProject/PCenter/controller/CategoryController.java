@@ -38,5 +38,7 @@ public class CategoryController {
         return new ResponseEntity<>(new ApiResponse(true, "category has been updated"), HttpStatus.OK);
     }
 
+    // może zagnieżdżone kategorie?
+
 
 }

@@ -45,7 +45,8 @@ public class ProductService {
         return productDto;
     }
     public Product getProductById(Integer id){
-        return productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Product not found"));
+        return productRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Product not found"));
     }
     public List<ProductDto> getAllProducts() {
         List<Product> allProducts = productRepository.findAll();
@@ -56,17 +57,15 @@ public class ProductService {
         return allDtoProducts;
     }
     public void updateProduct(ProductDto productDto, Integer productId) throws Exception{
-        Optional<Product> optionalProduct = productRepository.findById(productId);
-        if (!optionalProduct.isPresent()){
-            throw new Exception("Product is not present");
-        }
-        Product product = optionalProduct.get();
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new Exception("Product is not present"));
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
+
         productRepository.save(product);
     }
-    public Product findById(Integer productId) throws ProductNotExistsException {
+    public Product getById(Integer productId) throws ProductNotExistsException {
         Optional<Product> optionalProduct = productRepository.findById(productId);
         if (optionalProduct.isEmpty()) {
             throw new ProductNotExistsException("product id is invalid: " + productId);

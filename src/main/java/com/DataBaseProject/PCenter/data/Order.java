@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,17 +22,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dateCreated;
+    @JsonFormat(pattern = "yyyy-MM-ddThh:mm:ssZ") // ISO8601
+    private Instant dateCreated;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    private String status;
+    private Status status; // To raczej jako enum
+
+    public enum Status { CREATED, DELIVERED }
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pk.order")
+    @OneToMany(mappedBy = "pk.order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Valid
     private List<OrderProduct> orderProducts = new ArrayList<>();
 
@@ -40,7 +43,7 @@ public class Order {
         BigDecimal sum = new BigDecimal("0");
         List<OrderProduct> orderProducts = getOrderProducts();
         for (OrderProduct op : orderProducts){
-            sum=op.getTotalPrice();
+            sum = sum.add(op.getTotalPrice());
         }
         return sum;
     }

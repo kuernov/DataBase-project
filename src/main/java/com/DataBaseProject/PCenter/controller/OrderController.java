@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,10 +43,10 @@ public class OrderController {
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductExistence(formDtos);
         Order order = new Order();
-        order.setStatus(OrderStatus.PAID.name());
+        order.setStatus(Order.Status.CREATED);
         this.orderService.create(order, user);
 
-        List<OrderProduct> orderProducts = new ArrayList<>();
+        List<OrderProduct> orderProducts = new LinkedList<>();
         for (OrderProductDto dto : formDtos){
             orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProductById(dto
                     .getProduct().

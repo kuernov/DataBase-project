@@ -41,7 +41,7 @@ public class ShoppingCartController {
         if (shoppingCart != null) {
             return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(shoppingCart, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
     @PostMapping("/add-to-cart")

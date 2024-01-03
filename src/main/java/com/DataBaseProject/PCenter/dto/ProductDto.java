@@ -2,17 +2,11 @@ package com.DataBaseProject.PCenter.dto;
 
 import com.DataBaseProject.PCenter.data.Category;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class ProductDto {
     private Integer id;
     private @NotNull String name;

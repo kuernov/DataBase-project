@@ -27,10 +27,11 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
-    private Collection<Role> roles;
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Collection<RoleEnum> roles;
+    enum RoleEnum {ADMIN, USER}
+    @OneToOne(mappedBy = "user")
     private ShoppingCart cart;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
     public User(){
