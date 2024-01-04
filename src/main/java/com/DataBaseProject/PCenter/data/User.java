@@ -1,7 +1,17 @@
 package com.DataBaseProject.PCenter.data;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,18 +20,22 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column
     private String firstname;
+    @Column
     private String lastname;
     private String email;
     private String password;
@@ -32,21 +46,24 @@ public class User implements UserDetails {
     //inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     //private Collection<RoleEnum> roles;
     //enum RoleEnum {ADMIN, USER}
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    @Convert(converter = ListToJsonConverter.class)
+    private List<String> roles;
     @OneToOne(mappedBy = "user")
     private ShoppingCart cart;
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
-    public User(){
+    public User() {
         this.cart = new ShoppingCart();
         this.orders = new ArrayList<>();
+        this.roles = Collections.emptyList();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .toList();
     }
 
     @Override

@@ -1,6 +1,10 @@
 package com.DataBaseProject.PCenter.service;
 
-import com.DataBaseProject.PCenter.data.*;
+import com.DataBaseProject.PCenter.data.Order;
+import com.DataBaseProject.PCenter.data.OrderProduct;
+import com.DataBaseProject.PCenter.data.Product;
+import com.DataBaseProject.PCenter.data.ShoppingCart;
+import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.exception.InsufficientStockException;
 import com.DataBaseProject.PCenter.repository.OrderRepository;
 import com.DataBaseProject.PCenter.repository.ProductRepository;
@@ -11,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor

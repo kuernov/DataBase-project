@@ -3,23 +3,25 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.data.ShoppingCart;
 import com.DataBaseProject.PCenter.data.User;
-import com.DataBaseProject.PCenter.dto.ShoppingCartDto;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.service.ProductService;
 import com.DataBaseProject.PCenter.service.ShoppingCartService;
 import com.DataBaseProject.PCenter.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

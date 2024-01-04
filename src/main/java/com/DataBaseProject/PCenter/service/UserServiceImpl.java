@@ -1,23 +1,26 @@
 package com.DataBaseProject.PCenter.service;
 
+import com.DataBaseProject.PCenter.controller.UserController;
+import com.DataBaseProject.PCenter.data.Role;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.UserDto;
-import com.DataBaseProject.PCenter.repository.RoleRepository;
 import com.DataBaseProject.PCenter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.Collections.emptyList;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     @Override
-    public User save(UserDto userDto){
+    public User save(UserDto userDto) {
         User user = new User();
         user.setEmail(userDto.getEmail());
         user.setFirstname(userDto.getFirstName());
@@ -29,12 +32,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> findByEmail(String email){
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Override
-    public UserDto getUser(String email){
+    public Optional<User> findByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Override
+    public UserDto getUser(String email) {
         UserDto userDto = new UserDto();
         User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         userDto.setFirstName(user.getFirstname());
@@ -46,7 +54,24 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User update(UserDto userDto){
+    public void register(UserController.RegistrationRequest request) {
+        var user = User.builder()
+                .firstname(request.firstname())
+                .lastname(request.lastname())
+                .email(request.email())
+                // MUST BE HASHED!!!
+                .password(request.password())
+                .phoneNumber(request.phoneNumber())
+                .address(request.address())
+                .roles(List.of(Role.USER.name()))
+                .orders(emptyList())
+                .build();
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public User update(UserDto userDto) {
         User user = userRepository.findByEmail(userDto.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         user.setFirstname(userDto.getFirstName());
         user.setLastname(userDto.getLastName());

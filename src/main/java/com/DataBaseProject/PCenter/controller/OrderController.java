@@ -2,13 +2,12 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.data.Order;
 import com.DataBaseProject.PCenter.data.OrderProduct;
-import com.DataBaseProject.PCenter.data.OrderStatus;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.OrderProductDto;
 import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
+import com.DataBaseProject.PCenter.service.ProductService;
 import com.DataBaseProject.PCenter.service.order.OrderProductService;
 import com.DataBaseProject.PCenter.service.order.OrderService;
-import com.DataBaseProject.PCenter.service.ProductService;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +15,13 @@ import lombok.Setter;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -29,17 +31,17 @@ import java.util.Objects;
 @RequestMapping("/orders")
 @AllArgsConstructor
 public class OrderController {
-    ProductService productService;
-    OrderService orderService;
-    OrderProductService orderProductService;
+    private final ProductService productService;
+    private final OrderService orderService;
+    private final OrderProductService orderProductService;
 
     @GetMapping("/list")
-    public @NotNull Iterable<Order> list(){
+    public @NotNull Iterable<Order> list() {
         return this.orderService.getAllOrders();
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Order> create(@RequestBody OrderForm form, User user){
+    public ResponseEntity<Order> create(@RequestBody OrderForm form, User user) {
         List<OrderProductDto> formDtos = form.getProductOrders();
         validateProductExistence(formDtos);
         Order order = new Order();
@@ -47,7 +49,7 @@ public class OrderController {
         this.orderService.create(order, user);
 
         List<OrderProduct> orderProducts = new LinkedList<>();
-        for (OrderProductDto dto : formDtos){
+        for (OrderProductDto dto : formDtos) {
             orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProductById(dto
                     .getProduct().
                     getId()), dto.getQuantity())));
@@ -70,16 +72,17 @@ public class OrderController {
 
     }
 
-    private void validateProductExistence(List<OrderProductDto> orderProducts){
+    private void validateProductExistence(List<OrderProductDto> orderProducts) {
         List<OrderProductDto> list = orderProducts
                 .stream()
                 .filter(op -> Objects.isNull(productService.getProductById(op
                         .getProduct().getId())))
                 .toList();
-        if(!list.isEmpty()){
+        if (!list.isEmpty()) {
             throw new ResourceNotFoundException("Product not found");
         }
     }
+
     @Setter
     @Getter
     public static class OrderForm {

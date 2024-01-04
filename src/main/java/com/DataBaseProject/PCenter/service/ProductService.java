@@ -26,7 +26,7 @@ public class ProductService {
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setCategory(category);
-        productRepository.save(product);
+        return productRepository.save(product);
 //        Product product = Product.builder()
 //                .name(productDto.getName())
 //                .price(productDto.getPrice())
