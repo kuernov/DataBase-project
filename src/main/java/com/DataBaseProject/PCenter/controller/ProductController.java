@@ -2,6 +2,7 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Category;
+import com.DataBaseProject.PCenter.data.Product;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.repository.CategoryRepository;
 import com.DataBaseProject.PCenter.service.ProductService;
@@ -39,15 +40,11 @@ public class ProductController  {
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
-
-    // /products?categoryId=14325
-
-    // /products/search
-    // { "categoryId": 14325 }
-    @PostMapping
-    public ResponseEntity<List<ProductDto>> searchProducts(@RequestParam("categoryId") String categoryId) {
-        return null;
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam("query") String query){
+        return ResponseEntity.ok(productService.searchProducts(query));
     }
+
 
     @PutMapping("/{productId}")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productId") Integer productId, @RequestBody ProductDto productDto) throws Exception{

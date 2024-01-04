@@ -5,7 +5,10 @@ import com.DataBaseProject.PCenter.dto.UserDto;
 import com.DataBaseProject.PCenter.repository.RoleRepository;
 import com.DataBaseProject.PCenter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +29,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User findByEmail(String email){
+    public Optional<User> findByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
     @Override
     public UserDto getUser(String email){
         UserDto userDto = new UserDto();
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         userDto.setFirstName(user.getFirstname());
         userDto.setLastName(user.getLastname());
         userDto.setPassword(user.getPassword());
@@ -44,7 +47,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User update(UserDto userDto){
-        User user = userRepository.findByEmail(userDto.getEmail());
+        User user = userRepository.findByEmail(userDto.getEmail()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         user.setFirstname(userDto.getFirstName());
         user.setLastname(userDto.getLastName());
         user.setPhoneNumber(userDto.getPhoneNumber());
@@ -52,10 +55,4 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
-    @Override
-    public User changePass(UserDto userDto) {
-        User user = userRepository.findByEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
-        return userRepository.save(user);
-    }
 }

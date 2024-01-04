@@ -11,6 +11,7 @@ import com.DataBaseProject.PCenter.repository.CartItemRepository;
 import com.DataBaseProject.PCenter.repository.ShoppingCartRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 
@@ -28,7 +29,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     @Transactional
     public ShoppingCart addItemToCart(ProductDto productDto, int quantity, String email){
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));
         ShoppingCart shoppingCart = user.getCart();
         if (shoppingCart == null){
             shoppingCart = new ShoppingCart();
@@ -56,7 +57,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     @Transactional
     public ShoppingCart updateCart(ProductDto productDto, int quantity, String email) {
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));;
         ShoppingCart shoppingCart = user.getCart();
         Set<CartItem> cartItemSet = shoppingCart.getCartItems();
         CartItem cartItem = find(cartItemSet,  productDto.getId());
@@ -71,7 +72,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     @Override
     @Transactional
     public ShoppingCart removeItemFromCart(ProductDto productDto, String email){
-        User user = userService.findByEmail(email);
+        User user = userService.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(""));;
         ShoppingCart shoppingCart = user.getCart();
         Set<CartItem> cartItemSet = shoppingCart.getCartItems();
         CartItem cartItem = find(cartItemSet, productDto.getId());

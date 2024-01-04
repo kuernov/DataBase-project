@@ -20,7 +20,7 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-    public void createProduct(ProductDto productDto, Category category){
+    public Product createProduct(ProductDto productDto, Category category){
         Product product = new Product();
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
@@ -56,12 +56,20 @@ public class ProductService {
         }
         return allDtoProducts;
     }
+
+    public List<Product> searchProducts(String query) {
+        List<Product> products = productRepository.searchProducts(query);
+        return products;
+    }
+
+
     public void updateProduct(ProductDto productDto, Integer productId) throws Exception{
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new Exception("Product is not present"));
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
+        product.setCurrentQuantity(productDto.getCurrentQuantity());
 
         productRepository.save(product);
     }
