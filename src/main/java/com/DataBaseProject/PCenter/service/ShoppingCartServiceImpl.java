@@ -32,6 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         ShoppingCart shoppingCart = user.getCart();
         if (shoppingCart == null){
             shoppingCart = new ShoppingCart();
+            shoppingCart.setUser(user);
         }
         Set<CartItem> cartItemSet = shoppingCart.getCartItems();
         CartItem cartItem = find(cartItemSet, productDto.getId());

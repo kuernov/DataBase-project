@@ -34,5 +34,5 @@ public class Product {
     private int currentQuantity; // decrement przy tworzeniu ordera, add to cart rzuca wyjątek jak za mało
     @ManyToOne
     @JoinColumn(name = "category_id", referencedColumnName = "id")
-    Category category;
+    private Category category;
 }

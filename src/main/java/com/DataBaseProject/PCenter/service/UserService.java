@@ -11,8 +11,9 @@ public interface UserService {
     Optional<User> findByEmail(String email);
     Optional<User> findByEmailAndPassword(String email, String password);
     User update(UserDto userDto);
-
+    UserController.LoginResponse logIn(UserController.LoginRequest request);
     UserDto getUser(String email);
+
 
     void register(UserController.RegistrationRequest registrationRequest);
 }

@@ -30,15 +30,7 @@ public class UserController {
     ) {}
 
     @PostMapping("/login")
-    public LoginResponse logIn(@RequestBody @Validated LoginRequest request) {
-        // move it all to a service
-        // password MUST be hashed
-        return userService.findByEmailAndPassword(request.email(), request.password())
-                .map(jwtService::generateToken)
-                .map(LoginResponse::new)
-                // return proper response instead of just throwing
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
-    }
+    public LoginResponse logIn(@RequestBody @Validated LoginRequest request) { return userService.logIn(request); }
 
     public record LoginRequest(@NotBlank String email, @NotBlank String password) {}
 

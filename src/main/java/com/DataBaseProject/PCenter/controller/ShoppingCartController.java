@@ -13,26 +13,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @RestController
+@RequestMapping("/cart")
 @RequiredArgsConstructor
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final ProductService productService;
     private final UserService userService;
 
-    @GetMapping("/cart")
+    @GetMapping
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<ShoppingCart> getShoppingCart(Model model, Principal principal) {
+    public ResponseEntity<ShoppingCart> getShoppingCart(Principal principal) {
         if (principal == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -40,14 +35,13 @@ public class ShoppingCartController {
         User user = userService.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         ShoppingCart shoppingCart = user.getCart();
 
-
         if (shoppingCart != null) {
             return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/add-to-cart")
+    @PostMapping("/add")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> addItemToCart(@RequestParam("id") Integer id, @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity, Principal principal) {
         if (principal == null) {

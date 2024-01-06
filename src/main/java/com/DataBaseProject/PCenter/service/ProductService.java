@@ -26,6 +26,7 @@ public class ProductService {
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
         product.setCategory(category);
+        product.setCurrentQuantity(productDto.getCurrentQuantity());
         return productRepository.save(product);
 //        Product product = Product.builder()
 //                .name(productDto.getName())
@@ -42,6 +43,7 @@ public class ProductService {
         productDto.setCategory(product.getCategory());
         productDto.setPrice(product.getPrice());
         productDto.setId(product.getId());
+        productDto.setCurrentQuantity(product.getCurrentQuantity());
         return productDto;
     }
     public Product getProductById(Integer id){

@@ -1,5 +1,6 @@
 package com.DataBaseProject.PCenter.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,6 +30,7 @@ public class ShoppingCart {
     private Integer id;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
     private BigDecimal totalPrice;
     @OneToMany(cascade = CascadeType.DETACH, mappedBy = "cart")
