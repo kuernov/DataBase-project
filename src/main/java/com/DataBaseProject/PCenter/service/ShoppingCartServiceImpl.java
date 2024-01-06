@@ -37,14 +37,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         Set<CartItem> cartItemSet = shoppingCart.getCartItems();
         CartItem cartItem = find(cartItemSet, productDto.getId());
         Product product = transfer(productDto);
-        if (cartItemSet == null) {
-            cartItemSet = new HashSet<>();
-        }
         if (cartItem==null){
             cartItem = new CartItem();
             cartItem.setProduct(product);
             cartItem.setCart(shoppingCart);
             cartItem.setQuantity(quantity);
+            cartItemSet.add(cartItem);
         } else {
             cartItem.setQuantity(cartItem.getQuantity()+quantity);
         }
@@ -130,6 +128,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setCategory(productDto.getCategory());
+        product.setPrice(productDto.getPrice());
         product.setCurrentQuantity(productDto.getCurrentQuantity());
         return product;
     }

@@ -33,7 +33,7 @@ public class ShoppingCart {
     @JsonIgnore
     private User user;
     private BigDecimal totalPrice;
-    @OneToMany(cascade = CascadeType.DETACH, mappedBy = "cart")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     private Set<CartItem> cartItems;
 
     public ShoppingCart(){
