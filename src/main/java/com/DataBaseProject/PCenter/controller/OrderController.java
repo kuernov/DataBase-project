@@ -22,9 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 
 @RestController
@@ -48,7 +46,7 @@ public class OrderController {
         order.setStatus(Order.Status.CREATED);
         this.orderService.create(order, user);
 
-        List<OrderProduct> orderProducts = new LinkedList<>();
+        Set<OrderProduct> orderProducts = new HashSet<>();
         for (OrderProductDto dto : formDtos) {
             orderProducts.add(orderProductService.create(new OrderProduct(order, productService.getProductById(dto
                     .getProduct().

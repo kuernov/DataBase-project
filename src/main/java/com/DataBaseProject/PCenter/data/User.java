@@ -1,5 +1,7 @@
 package com.DataBaseProject.PCenter.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -51,6 +53,7 @@ public class User implements UserDetails {
     @OneToOne(mappedBy = "user")
     private ShoppingCart cart;
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Order> orders;
 
     public User() {

@@ -1,7 +1,6 @@
 package com.DataBaseProject.PCenter.data;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,6 +19,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -30,11 +30,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @JsonFormat(pattern = "yyyy-MM-ddThh:mm:ssZ") // ISO8601
+    @JsonFormat//(pattern = "yyyy-MM-dd'T'HH:mm:ssZ") // ISO8601
     private Instant dateCreated;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonBackReference
     private User user;
 
     private Status status; // To raczej jako enum
@@ -43,13 +44,13 @@ public class Order {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "pk.order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-    @Valid
-    private List<OrderProduct> orderProducts = new ArrayList<>();
+
+    private Set<OrderProduct> orderProducts;
 
     @Transient
     public BigDecimal getTotalOrderPrice(){
         BigDecimal sum = new BigDecimal("0");
-        List<OrderProduct> orderProducts = getOrderProducts();
+        Set<OrderProduct> orderProducts = getOrderProducts();
         for (OrderProduct op : orderProducts){
             sum = sum.add(op.getTotalPrice());
         }

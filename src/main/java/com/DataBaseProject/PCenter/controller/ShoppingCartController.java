@@ -1,9 +1,12 @@
 package com.DataBaseProject.PCenter.controller;
 
 
+import com.DataBaseProject.PCenter.data.Order;
 import com.DataBaseProject.PCenter.data.ShoppingCart;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.ProductDto;
+import com.DataBaseProject.PCenter.exception.InsufficientStockException;
+import com.DataBaseProject.PCenter.service.CheckoutService;
 import com.DataBaseProject.PCenter.service.ProductService;
 import com.DataBaseProject.PCenter.service.ShoppingCartService;
 import com.DataBaseProject.PCenter.service.UserService;
@@ -24,6 +27,7 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final ProductService productService;
     private final UserService userService;
+    private final CheckoutService checkoutService;
 
     @GetMapping
     @PreAuthorize("isAuthenticated()")
@@ -90,5 +94,21 @@ public class ShoppingCartController {
             }
             ShoppingCart shoppingCart = shoppingCartService.removeItemFromCart(productDto, email);
             return new ResponseEntity<>(shoppingCart, HttpStatus.OK);
+    }
+
+    @PostMapping("/checkout")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> createOrder(Principal principal) {
+        if (principal == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        String username = principal.getName();
+        User user = userService.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        try {
+            Order order = checkoutService.checkout(user.getEmail());
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } catch (InsufficientStockException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
