@@ -1,6 +1,8 @@
 package com.DataBaseProject.PCenter.service;
 
 import com.DataBaseProject.PCenter.data.Category;
+import com.DataBaseProject.PCenter.data.Subcategory;
+import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
 import com.DataBaseProject.PCenter.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +34,10 @@ public class CategoryService {
             return categoryRepository.findById(categoryId);
         }
         return null;
+    }
+
+    public List<Subcategory> listSubcategories(int id) {
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category not found"));
+        return category.getSubcategories();
     }
 }

@@ -2,6 +2,7 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Category;
+import com.DataBaseProject.PCenter.data.Subcategory;
 import com.DataBaseProject.PCenter.service.CategoryService;
 import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,9 @@ public class CategoryController {
         return new ResponseEntity<>(new ApiResponse(true, "category has been updated"), HttpStatus.OK);
     }
 
-    // może zagnieżdżone kategorie?
-
+    @GetMapping("/list/{id}")
+    public List<Subcategory> listSubcategories(@PathVariable int id){
+        return categoryService.listSubcategories(id);
+    }
 
 }
