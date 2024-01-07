@@ -32,7 +32,7 @@ public class ProductController  {
     private final CategoryRepository categoryRepository;
 
     @PostMapping
-    @RolesAllowed("ADMIN")
+    //@RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> createProduct(@RequestBody @Validated ProductDto productDto){
         Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
         if(!optionalCategory.isPresent())
@@ -43,6 +43,7 @@ public class ProductController  {
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> getProducts() {
+
         List<ProductDto> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }

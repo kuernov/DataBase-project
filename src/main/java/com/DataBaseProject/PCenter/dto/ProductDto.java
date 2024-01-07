@@ -1,6 +1,7 @@
 package com.DataBaseProject.PCenter.dto;
 
 import com.DataBaseProject.PCenter.data.Category;
+import com.DataBaseProject.PCenter.data.Subcategory;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -12,7 +13,8 @@ public class ProductDto {
     private @NotNull String name;
     private @NotNull BigDecimal price;
     private @NotNull String description;
-    private @NotNull Category category;
+    private @NotNull CategoryDto category;
+    private @NotNull Subcategory subcategory;
     private int currentQuantity;
 
 }

@@ -114,7 +114,7 @@ public class ShoppingCartController {
         User user = userService.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         try {
             Order order = checkoutService.checkout(user.getEmail());
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return new ResponseEntity<>(order, HttpStatus.OK);
         } catch (InsufficientStockException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

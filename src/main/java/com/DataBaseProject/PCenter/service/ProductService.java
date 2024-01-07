@@ -7,6 +7,7 @@ import com.DataBaseProject.PCenter.exception.ProductNotExistsException;
 import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
 import com.DataBaseProject.PCenter.repository.ProductRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,12 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    private ProductMapper productMapper;
 
     public Product createProduct(ProductDto productDto, Category category){
         Product product = new Product();
@@ -27,24 +31,11 @@ public class ProductService {
         product.setPrice(productDto.getPrice());
         product.setCategory(category);
         product.setCurrentQuantity(productDto.getCurrentQuantity());
+        product.setSubcategory(productDto.getSubcategory());
         return productRepository.save(product);
-//        Product product = Product.builder()
-//                .name(productDto.getName())
-//                .price(productDto.getPrice())
-//                .description(productDto.getDescription())
-//                .category(category)
-//                .build();
-//        productRepository.save(product);
     }
     public ProductDto getProductDto(Product product) {
-        ProductDto productDto = new ProductDto();
-        productDto.setDescription(product.getDescription());
-        productDto.setName(product.getName());
-        productDto.setCategory(product.getCategory());
-        productDto.setPrice(product.getPrice());
-        productDto.setId(product.getId());
-        productDto.setCurrentQuantity(product.getCurrentQuantity());
-        return productDto;
+        return productMapper.mapToDTO(product);
     }
     public Product getProductById(Integer id){
         return productRepository.findById(id)

@@ -25,6 +25,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final UserService userService;
+    private final ProductMapper productMapper;
 
     @Override
     @Transactional
@@ -127,13 +128,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         return cartItem;
     }
     private Product transfer(ProductDto productDto) {
-        Product product = new Product();
-        product.setId(productDto.getId());
-        product.setName(productDto.getName());
-        product.setDescription(productDto.getDescription());
-        product.setCategory(productDto.getCategory());
-        product.setPrice(productDto.getPrice());
-        product.setCurrentQuantity(productDto.getCurrentQuantity());
-        return product;
+        return productMapper.mapToEntity(productDto);
     }
 }
