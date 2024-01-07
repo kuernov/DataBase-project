@@ -15,6 +15,34 @@ public class BasicFuntionsTest {
         RestAssured.given()
                 .body("""
                         {
+                            "email": "testuser@my.com",
+                            "password": "admin1234"
+                        }
+                        """)
+                .header("content-type", "application/json")
+                .when().post("/registration")
+                .then().assertThat().statusCode(200);
+        var token = RestAssured.given()
+                .body("""
+                        {
+                            "email": "testuser@my.com",
+                            "password": "admin1234"
+                        }
+                        """)
+                .header("content-type", "application/json")
+                .when().post("/login")
+                .then().assertThat().statusCode(200)
+                .extract().jsonPath().getString("token");
+
+        RestAssured.given().header("Authorization", "Bearer " + token)
+                .when().get("/me")
+                .then().assertThat().statusCode(200);
+
+
+
+        RestAssured.given()
+                .body("""
+                        {
                             "name":"CPU",
                             "description":"Procesory"
                                                 
@@ -57,31 +85,6 @@ public class BasicFuntionsTest {
                 .when().post("/products")
                 .then().assertThat().statusCode(400);
 
-        RestAssured.given()
-                .body("""
-                        {
-                            "email": "testuser@my.com",
-                            "password": "admin1234"
-                        }
-                        """)
-                .header("content-type", "application/json")
-                .when().post("/registration")
-                .then().assertThat().statusCode(200);
-        var token = RestAssured.given()
-                .body("""
-                        {
-                            "email": "testuser@my.com",
-                            "password": "admin1234"
-                        }
-                        """)
-                .header("content-type", "application/json")
-                .when().post("/login")
-                .then().assertThat().statusCode(200)
-                .extract().jsonPath().getString("token");
-
-        RestAssured.given().header("Authorization", "Bearer " + token)
-                .when().get("/me")
-                .then().assertThat().statusCode(200);
 
         RestAssured.given()
                 .queryParam("id", 1)

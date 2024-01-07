@@ -6,6 +6,7 @@ import com.DataBaseProject.PCenter.data.Product;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.repository.CategoryRepository;
 import com.DataBaseProject.PCenter.service.ProductService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +32,7 @@ public class ProductController  {
     private final CategoryRepository categoryRepository;
 
     @PostMapping
+    @RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> createProduct(@RequestBody @Validated ProductDto productDto){
         Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
         if(!optionalCategory.isPresent())
@@ -52,6 +54,7 @@ public class ProductController  {
 
 
     @PutMapping("/{productId}")
+    @RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> updateProduct(@PathVariable("productId") Integer productId, @RequestBody ProductDto productDto) throws Exception{
         Optional<Category> optionalCategory = categoryRepository.findById(productDto.getCategory().getId());
         if (optionalCategory.isPresent())

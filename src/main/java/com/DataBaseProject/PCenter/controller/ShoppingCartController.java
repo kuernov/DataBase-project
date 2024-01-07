@@ -10,6 +10,7 @@ import com.DataBaseProject.PCenter.service.CheckoutService;
 import com.DataBaseProject.PCenter.service.ProductService;
 import com.DataBaseProject.PCenter.service.ShoppingCartService;
 import com.DataBaseProject.PCenter.service.UserService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,7 @@ public class ShoppingCartController {
     private final CheckoutService checkoutService;
 
     @GetMapping
+    @RolesAllowed("USER")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> getShoppingCart(Principal principal) {
         if (principal == null) {
@@ -46,6 +48,7 @@ public class ShoppingCartController {
         }
     }
     @PostMapping("/add")
+    @RolesAllowed("USER")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> addItemToCart(@RequestParam("id") Integer id, @RequestParam(value = "quantity", required = false, defaultValue = "1") int quantity, Principal principal) {
         if (principal == null) {
@@ -61,6 +64,8 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/update")
+    @RolesAllowed("USER")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> updateCart(@RequestParam("id") Integer id,
                                                           @RequestParam("quantity") int quantity,
                                                           Principal principal) {
@@ -80,6 +85,8 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @RolesAllowed("USER")
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<ShoppingCart> deleteItem(@PathVariable("id") Integer id,
                                                           Principal principal) {
 
@@ -97,6 +104,7 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/checkout")
+    @RolesAllowed("USER")
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<?> createOrder(Principal principal) {
         if (principal == null) {

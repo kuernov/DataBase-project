@@ -1,6 +1,7 @@
 package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.config.JwtService;
+import com.DataBaseProject.PCenter.data.Address;
 import com.DataBaseProject.PCenter.service.UserService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.constraints.NotBlank;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     public record RegistrationRequest(String firstname, String lastname, String email, String password,
-                                      String phoneNumber, String address
+                                      String phoneNumber, String street, String city, String postalCode
     ) {}
 
     @PostMapping("/login")

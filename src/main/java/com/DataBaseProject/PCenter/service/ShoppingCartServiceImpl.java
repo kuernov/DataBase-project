@@ -7,6 +7,7 @@ import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.CartItemDto;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.dto.ShoppingCartDto;
+import com.DataBaseProject.PCenter.exception.InsufficientStockException;
 import com.DataBaseProject.PCenter.repository.CartItemRepository;
 import com.DataBaseProject.PCenter.repository.ShoppingCartRepository;
 import jakarta.transaction.Transactional;
@@ -37,6 +38,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         Set<CartItem> cartItemSet = shoppingCart.getCartItems();
         CartItem cartItem = find(cartItemSet, productDto.getId());
         Product product = transfer(productDto);
+        if(product.getCurrentQuantity()<quantity){
+            throw new InsufficientStockException("Insufficient stock for product:" + product.getName());
+        }
         if (cartItem==null){
             cartItem = new CartItem();
             cartItem.setProduct(product);

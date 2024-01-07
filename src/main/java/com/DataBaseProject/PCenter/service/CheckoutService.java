@@ -2,10 +2,7 @@ package com.DataBaseProject.PCenter.service;
 
 import com.DataBaseProject.PCenter.data.*;
 import com.DataBaseProject.PCenter.exception.InsufficientStockException;
-import com.DataBaseProject.PCenter.repository.OrderProductRepository;
-import com.DataBaseProject.PCenter.repository.OrderRepository;
-import com.DataBaseProject.PCenter.repository.ProductRepository;
-import com.DataBaseProject.PCenter.repository.UserRepository;
+import com.DataBaseProject.PCenter.repository.*;
 import com.DataBaseProject.PCenter.service.order.OrderProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +19,7 @@ import java.util.stream.Collectors;
 public class CheckoutService {
 
     private final UserRepository userRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final OrderProductService orderProductService;
@@ -57,6 +55,7 @@ public class CheckoutService {
         order.setOrderProducts(orderProducts);
         order.setDateCreated(Instant.now());
         order.setStatus(Order.Status.CREATED);
+        shoppingCartRepository.delete(cart);
         return orderRepository.save(order);
 
     }

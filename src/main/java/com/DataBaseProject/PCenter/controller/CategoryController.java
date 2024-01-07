@@ -3,6 +3,7 @@ package com.DataBaseProject.PCenter.controller;
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Category;
 import com.DataBaseProject.PCenter.service.CategoryService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
     @PostMapping("/create")
+    @RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> createCategory(@RequestBody Category category){
         categoryService.createCategory(category);
         return new ResponseEntity<>(new ApiResponse(true, "a new category created"), HttpStatus.CREATED);
@@ -35,6 +37,7 @@ public class CategoryController {
         return categoryService.getById(id);
     }
     @PostMapping("/update/{categoryId}")
+    @RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable ("categoryId") int categoryId, @RequestBody Category category){
         if(!categoryService.findById(categoryId))
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category not found"), HttpStatus.NOT_FOUND);

@@ -2,9 +2,11 @@ package com.DataBaseProject.PCenter.service;
 
 import com.DataBaseProject.PCenter.config.JwtService;
 import com.DataBaseProject.PCenter.controller.UserController;
+import com.DataBaseProject.PCenter.data.Address;
 import com.DataBaseProject.PCenter.data.Role;
 import com.DataBaseProject.PCenter.data.User;
 import com.DataBaseProject.PCenter.dto.UserDto;
+import com.DataBaseProject.PCenter.repository.AddressRepository;
 import com.DataBaseProject.PCenter.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import static java.util.Collections.emptyList;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AddressRepository addressRepository;
     private final JwtService jwtService;
 
 
@@ -63,18 +66,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserController.RegistrationRequest request) {
+
         var user = User.builder()
                 .firstname(request.firstname())
                 .lastname(request.lastname())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .phoneNumber(request.phoneNumber())
-                .address(request.address())
                 .roles(List.of(Role.USER.name()))
                 .orders(emptyList())
                 .build();
-
+        Address address = new Address();
+        address.setStreet(request.street());
+        address.setCity(request.city());
+        address.setPostalCode(request.postalCode());
+        //addressRepository.save(address);
+        user.setAddress(address);
         userRepository.save(user);
+        address.setUser(user);
+        addressRepository.save(address);
+
     }
     public UserController.LoginResponse logIn(UserController.LoginRequest request) {
         return findByEmail(request.email())

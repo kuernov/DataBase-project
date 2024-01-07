@@ -1,5 +1,6 @@
 package com.DataBaseProject.PCenter.dto;
 
+import com.DataBaseProject.PCenter.data.Address;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,5 +19,5 @@ public class UserDto {
     private String password;
     @Size(min = 9, message = "Password contains min 9 characters")
     private String phoneNumber;
-    private String address;
+    private Address address;
 }
