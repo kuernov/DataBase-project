@@ -1,6 +1,7 @@
 package com.DataBaseProject.PCenter.data;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +29,7 @@ public class Product {
     private String imageURL;
     private int currentQuantity; // decrement przy tworzeniu ordera, add to cart rzuca wyjątek jak za mało
     @ManyToOne
+    @JsonIgnoreProperties("subcategories")
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
     @ManyToOne

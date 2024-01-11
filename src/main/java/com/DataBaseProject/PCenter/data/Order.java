@@ -43,8 +43,7 @@ public class Order {
     public enum Status { CREATED, DELIVERED }
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "pk.order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
-
+    @OneToMany(mappedBy = "pk.order", cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE}, orphanRemoval = true)
     private Set<OrderProduct> orderProducts;
 
     @Transient

@@ -24,6 +24,7 @@ public class CheckoutService {
     private final ProductRepository productRepository;
     private final OrderProductService orderProductService;
 
+    @Transactional
     public Order checkout(String userId) {
         User user = userRepository.findByEmail(userId).orElseThrow(() -> new UsernameNotFoundException(""));
         ShoppingCart cart = user.getCart();
@@ -46,10 +47,10 @@ public class CheckoutService {
                     product.setCurrentQuantity(product.getCurrentQuantity() - quantity);
                     productRepository.save(product);
 
-                    OrderProduct orderProduct = new OrderProduct(order,product,quantity);
+                    return new OrderProduct(order, product,quantity);
 
-                    orderProductService.create(orderProduct);
-                    return orderProduct;
+                    //orderProductService.create(orderProduct);
+                    //return orderProduct;
                 })
                 .collect(Collectors.toSet());
         order.setOrderProducts(orderProducts);
