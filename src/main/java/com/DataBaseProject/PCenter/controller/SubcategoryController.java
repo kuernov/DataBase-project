@@ -2,9 +2,7 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Subcategory;
-import com.DataBaseProject.PCenter.data.Subcategory;
 import com.DataBaseProject.PCenter.service.SubcategoryService;
-import jakarta.annotation.security.RolesAllowed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

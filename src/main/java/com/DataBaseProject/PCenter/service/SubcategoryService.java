@@ -6,7 +6,6 @@ import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
 import com.DataBaseProject.PCenter.repository.CategoryRepository;
 import com.DataBaseProject.PCenter.repository.SubcategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

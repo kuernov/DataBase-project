@@ -1,6 +1,5 @@
 package com.DataBaseProject.PCenter.dto;
 
-import com.DataBaseProject.PCenter.data.Category;
 import com.DataBaseProject.PCenter.data.Subcategory;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
