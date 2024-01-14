@@ -40,7 +40,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
         CartItem cartItem = find(cartItemSet, productDto.getId());
         Product product = transfer(productDto);
         if(product.getCurrentQuantity()<quantity){
-            throw new InsufficientStockException("Insufficient stock for product:" + product.getName());
+            throw new InsufficientStockException("Insufficient stock for product: " + product.getName());
         }
         if (cartItem==null){
             cartItem = new CartItem();
