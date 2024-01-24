@@ -1,14 +1,13 @@
 package com.DataBaseProject.PCenter.data;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -22,6 +21,9 @@ public class Category {
     private Integer id;
     private String name;
     private String description;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Subcategory> subcategories;
 
 
 }

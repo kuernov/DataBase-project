@@ -2,12 +2,17 @@ package com.DataBaseProject.PCenter.controller;
 
 import com.DataBaseProject.PCenter.common.ApiResponse;
 import com.DataBaseProject.PCenter.data.Category;
+import com.DataBaseProject.PCenter.data.Subcategory;
 import com.DataBaseProject.PCenter.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.html.HTMLQuoteElement;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +23,7 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
     @PostMapping("/create")
+    //@RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> createCategory(@RequestBody Category category){
         categoryService.createCategory(category);
         return new ResponseEntity<>(new ApiResponse(true, "a new category created"), HttpStatus.CREATED);
@@ -31,6 +37,7 @@ public class CategoryController {
         return categoryService.getById(id);
     }
     @PostMapping("/update/{categoryId}")
+    //@RolesAllowed("ADMIN")
     public ResponseEntity<ApiResponse> updateCategory(@PathVariable ("categoryId") int categoryId, @RequestBody Category category){
         if(!categoryService.findById(categoryId))
             return new ResponseEntity<ApiResponse>(new ApiResponse(false, "category not found"), HttpStatus.NOT_FOUND);
@@ -38,5 +45,9 @@ public class CategoryController {
         return new ResponseEntity<>(new ApiResponse(true, "category has been updated"), HttpStatus.OK);
     }
 
+    @GetMapping("/list/{id}")
+    public List<Subcategory> listSubcategories(@PathVariable int id){
+        return categoryService.listSubcategories(id);
+    }
 
 }

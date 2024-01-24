@@ -1,24 +1,19 @@
 package com.DataBaseProject.PCenter.dto;
 
+import com.DataBaseProject.PCenter.data.Subcategory;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
+import java.math.BigDecimal;
+
+@Data
 public class ProductDto {
     private Integer id;
     private @NotNull String name;
-    private @NotNull double price;
+    private @NotNull BigDecimal price;
     private @NotNull String description;
-    private @NotNull Integer categoryId;
+    private @NotNull CategoryDto category;
+    private @NotNull Subcategory subcategory;
+    private int currentQuantity;
 
-    public ProductDto(String name, double price, String description, Integer categoryId){
-        this.name = name;
-        this.price = price;
-        this.description = description;
-        this.categoryId = categoryId;
-    }
 }

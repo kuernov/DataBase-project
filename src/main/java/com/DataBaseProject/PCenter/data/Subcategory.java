@@ -1,5 +1,6 @@
 package com.DataBaseProject.PCenter.data;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +12,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "clients")
-public class Client {
+@Table(name = "subcategories")
+public class Subcategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer Id;
     private String name;
-    private String lastName;
-    private String email;
-    private String phone;
-
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "category_id")
+    private Category category;
 }
