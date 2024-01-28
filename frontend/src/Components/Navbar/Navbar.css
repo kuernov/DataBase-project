@@ -22,9 +22,13 @@
     align-items: center;
     list-style: none;
     gap: 50px;
-    color: #626262;
+    color: black;
     font-size: 20px;
     font-weight: 500;
+}
+
+.nav-menu p{
+    color: #171717;
 }
 .nav-menu li{
     display: flex;
@@ -33,6 +37,7 @@
     justify-content: center;
     gap: 3px;
     cursor: pointer;
+    color: #f30404;
 }
 
 .nav-menu hr{
@@ -40,7 +45,7 @@
     width: 80%;
     height: 3px;
     border-radius: 10px;
-    background: #FF4141;
+    background:rgb(196, 15, 15);
 }
 
 .nav-login-cart{
@@ -76,6 +81,6 @@
     margin-left: -55px;
     border-radius: 11px;
     font-size: 14px;
-    background: red;
+    background: rgb(196, 15, 15);
     color: white;
 }

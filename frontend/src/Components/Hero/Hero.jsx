@@ -2,24 +2,22 @@ import React from 'react'
 import './Hero.css'
 import hand_icon from '../Assets/hand_icon.png'
 import arrow_icon from '../Assets/arrow.png'
+import { Link } from 'react-router-dom'
 
 
 const Hero = () => {
   return (
     <div className='hero'>
         <div className="hero-left">
-            <h2>Tekst na stronie głównej</h2>
+            <h2>Najnowsze Technologie</h2>
             <div>
                 <div className="hero-hand-icon">
-                    <p>new</p>
-                    <img src={hand_icon} alt=""/>
+                    <p>Odkryj nowy wymiary technologii</p>
                 </div>
-                <p>Tekst na stronie głównej</p>
-                <p>Tekst na stronie głównej</p>
             </div>
             <div className="hero-latest-btn">
-                <div>Sale</div>
-                <img src={arrow_icon} alt=""/>
+            <Link style={{textDecoration: 'none'}} to={`/product/6`}> <button>Sprawdź</button> <img src={arrow_icon} alt=""/></Link>
+               
             </div>
         </div>
 

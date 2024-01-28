@@ -6,15 +6,15 @@ import NewStuff from '../Components/NewStuff/NewStuff'
 import NewsLetter from '../Components/NewsLetter/NewsLetter'
 
 const Shop = () => {
-    return (
-        <div>
-            <Hero/>
-            <Popular/>
-            <Offers/>
-            <NewStuff/>
-            <NewsLetter/>
-        </div>
-    )
+  return (
+    <div>
+        <Hero/>
+        <Popular/>
+        <Offers/>
+        <NewStuff/>
+        <NewsLetter/>
+    </div>
+  )
 }
 
 export default Shop

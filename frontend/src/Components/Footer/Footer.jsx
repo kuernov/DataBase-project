@@ -1,6 +1,6 @@
 import React from 'react'
 import './Footer.css'
-import footer_logo from '../Assets/logo.png'
+import footer_logo from '../Assets/logo.jpg'
 import instagram_icon from '../Assets/instagram_icon.png'
 import facebook_icon from '../Assets/facebook_icon.png'
 import yt_icon from '../Assets/yt_icon.png'
@@ -14,11 +14,11 @@ const Footer = () => {
             <p>PCenter</p>
         </div>
         <ul className="footer-links">
-            <li>Tekst</li>
-            <li>Tekst</li>
-            <li>Tekst</li>
-            <li>Tekst</li>
-            <li>Tekst</li>
+            <li>Firma</li>
+            <li>Produkty</li>
+            <li>Siedziba</li>
+            <li>O nas</li>
+            <li>Kontakt</li>
         </ul>
         <div className="footer-social-icon">
             <div className="footer-icons-container">

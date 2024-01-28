@@ -24,10 +24,10 @@ let data_product = [
     old_price:2000.50,
   },
   {id:4,
-    name:"SteelSeries Rival 5",
+    name:"AMD RYZEN 7800X3D",
     image:p4_img,
-    new_price:219.00,
-    old_price:300.00,
+    new_price:1799,
+    old_price:2000,
   },
 ];
 
