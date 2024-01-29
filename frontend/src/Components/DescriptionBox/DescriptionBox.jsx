@@ -1,7 +1,23 @@
-import React from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import './DescriptionBox.css'
+import {ShopContext} from "../../Context/ShopContext";
+import {useParams} from "react-router-dom";
 
 const DescriptionBox = () => {
+    const [product, setProduct] = useState(null);
+    const { productId } = useParams();
+
+    useEffect(() => {
+        // Pobieranie danych z backendu
+        fetch(`http://localhost:8080/products/${productId}`)
+            .then(response => response.json())
+            .then(data => setProduct(data))
+            .catch(error => console.error('Błąd podczas pobierania danych z backendu:', error));
+    }, [productId]);
+
+    if (!product) {
+        return <p>Ładowanie danych...</p>;
+    }
   return (
     <div className='descriptionbox'>
         <div className="descriptionbox-navigator">
@@ -13,10 +29,8 @@ const DescriptionBox = () => {
             </div>
         </div>
         <div className="descriptionbox-description">
-            <p> Procesor AMD Ryzen 7 7800X3D to odpowiedź firmy AMD na rosnące wymagania najnowszych gier komputerowych. Dzięki zastosowaniu autorskiej technologii AMD 3D V-Cache oferuje jeszcze wyższą moc obliczeniową i jeszcze wyższą wydajność, by zwiększyć szansę na błyskawiczną reakcję na wydarzenia w ulubionej grze.
-            </p>
-            <p>Jednym z najistotniejszych parametrów procesora jest rozmiar pamięci podręcznej. To właśnie on może mieć decydujący wpływ na to, jak szybko procesor wykonuje obliczenia. W przypadku AMD Ryzen 7 7800X3D zastosowano technologię AMD 3D V-Cache, która pozwala na znaczące zwiększenie rozmiaru pamięci trzeciego poziomu (L3). Między innymi dzięki temu AMD Ryzen 7 7800X3D to jeden z najlepszych wyborów wśród procesorów dedykowanych graczom.
-            </p>
+            <p> {product.description} </p>
+
         </div>
     </div>
   )

@@ -12,6 +12,7 @@ public class ProductDto {
     private @NotNull String name;
     private @NotNull BigDecimal price;
     private @NotNull String description;
+    private @NotNull String imageURL;
     private @NotNull CategoryDto category;
     private @NotNull Subcategory subcategory;
     private int currentQuantity;

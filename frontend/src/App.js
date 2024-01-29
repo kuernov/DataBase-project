@@ -17,11 +17,11 @@ function App() {
       <Navbar/>
       <Routes>
         <Route path = '/' element={<Shop/>}/>
-        <Route path = '/Obudowy' element={<ShopCategory category="obudowy"/>}/>
-        <Route path = '/KartyGraficzne' element={<ShopCategory category="kartygraficzne"/>}/>
-        <Route path = '/procesory' element={<ShopCategory category="procesory"/>}/>
-        <Route path = '/PłytyGłówne' element={<ShopCategory category="plytyglowne"/>}/>
-        <Route path = '/Zasilacze' element={<ShopCategory category="zasilacze"/>}/>
+        <Route path = '/Obudowy' element={<ShopCategory category="Obudowy"/>}/>
+        <Route path = '/KartyGraficzne' element={<ShopCategory category="Kartygraficzne"/>}/>
+        <Route path = '/Procesory' element={<ShopCategory category="Procesory"/>}/>
+        <Route path = '/PłytyGłówne' element={<ShopCategory category="Plytyglowne"/>}/>
+        <Route path = '/Zasilacze' element={<ShopCategory category="Zasilacze"/>}/>
         <Route path= "/product" element={<Product/>}>
           <Route path= ':productId' element={<Product/>}/>
         </Route>

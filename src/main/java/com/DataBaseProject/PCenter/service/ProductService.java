@@ -2,6 +2,7 @@ package com.DataBaseProject.PCenter.service;
 
 import com.DataBaseProject.PCenter.data.Category;
 import com.DataBaseProject.PCenter.data.Product;
+import com.DataBaseProject.PCenter.data.Subcategory;
 import com.DataBaseProject.PCenter.dto.ProductDto;
 import com.DataBaseProject.PCenter.exception.ProductNotExistsException;
 import com.DataBaseProject.PCenter.exception.ResourceNotFoundException;
@@ -29,6 +30,7 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
+        product.setImageURL(productDto.getImageURL());
         product.setCategory(category);
         product.setCurrentQuantity(productDto.getCurrentQuantity());
         product.setSubcategory(productDto.getSubcategory());
@@ -55,6 +57,14 @@ public class ProductService {
         return products;
     }
 
+    public List<Product> getProductsByCategory(Category category) {
+        return productRepository.findByCategory(category);
+    }
+
+    public List<Product> getProductsBySubcategory(Subcategory subcategory) {
+        return productRepository.findBySubcategory(subcategory);
+    }
+
 
     public void updateProduct(ProductDto productDto, Integer productId) throws Exception{
         Product product = productRepository.findById(productId)
@@ -62,6 +72,7 @@ public class ProductService {
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPrice(productDto.getPrice());
+        product.setImageURL(productDto.getImageURL());
         product.setCurrentQuantity(productDto.getCurrentQuantity());
 
         productRepository.save(product);
