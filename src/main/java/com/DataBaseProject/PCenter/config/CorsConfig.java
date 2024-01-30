@@ -10,9 +10,10 @@ import java.util.List;
 
 @Configuration
 public class CorsConfig {
-
     @Bean
     public CorsFilter corsFilter() {
+        System.out.println("Setting up CORS filter...");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
@@ -23,7 +24,7 @@ public class CorsConfig {
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 
         // Ustawia nagłówki, które są dozwolone w żądaniach
-        config.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept"));
+        config.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization", "X-CSRF-TOKEN"));
 
         // Ustawia, czy dozwolone są ciasteczka w żądaniach od klienta
         config.setAllowCredentials(true);

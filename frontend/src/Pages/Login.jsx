@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './CSS/LoginSignup.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginStatus, setLoginStatus] = useState(null);
   const [accessToken, setAccessToken] = useState('');
+
+  // Use useNavigate instead of useHistory
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     const data = { email, password };
@@ -22,7 +25,8 @@ const Login = () => {
 
       if (response.ok) {
         const responseData = await response.json();
-        const token = responseData.accessToken;
+        console.log('Odpowiedź od serwera:', responseData);
+        const token = responseData.token;
 
         // Obsługa poprawnej odpowiedzi
         setLoginStatus('success');
@@ -32,6 +36,11 @@ const Login = () => {
 
         // Przechowywanie tokenu w localStorage
         localStorage.setItem('accessToken', token);
+        console.log('Bearer Token:', token);
+
+        // Przeładowanie strony po udanym zalogowaniu
+        navigate('/'); // Use navigate to go to the home page
+        window.location.reload();
       } else {
         // Obsługa błędnej odpowiedzi
         setLoginStatus('error');
@@ -64,10 +73,7 @@ const Login = () => {
           </div>
           <button onClick={handleLogin}>Kontynuuj</button>
           <p className="loginsignup-login">Nie masz konta? <Link style={{ textDecoration: 'none' }} to={'/login'}><span>Zarejestruj się</span></Link></p>
-          <div className="loginsignup-agree">
-            <input type="checkbox" name='' id='' />
-            <p>Kontynuując, zgadzam się z polityką prywatności i warunkami użytkowania </p>
-          </div>
+
         </div>
       </div>
   );

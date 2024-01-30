@@ -12,7 +12,6 @@ const Shop = () => {
         <Popular/>
         <Offers/>
         <NewStuff/>
-        <NewsLetter/>
     </div>
   )
 }

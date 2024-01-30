@@ -5,8 +5,13 @@ import { Link } from 'react-router-dom';
 const LoginSignup = () => {
   const [formData, setFormData] = useState({
     firstname: '',
+    lastname: '',
     email: '',
     password: '',
+    phoneNumber: '',
+    street: '',
+    city: '',
+    postalCode: '',
   });
 
   const [feedback, setFeedback] = useState(null);
@@ -30,8 +35,13 @@ const LoginSignup = () => {
         setFeedback('Rejestracja zakończona sukcesem!');
         setFormData({
           firstname: '',
+          lastname: '',
           email: '',
           password: '',
+          phoneNumber: '',
+          street: '',
+          city: '',
+          postalCode: '',
         });
       } else {
         const errorData = await response.json();
@@ -57,6 +67,13 @@ const LoginSignup = () => {
                 onChange={handleChange}
             />
             <input
+                type="text"
+                placeholder='Nazwisko'
+                name="lastname"
+                value={formData.lastname}
+                onChange={handleChange}
+            />
+            <input
                 type="email"
                 placeholder='Adres Email'
                 name="email"
@@ -70,18 +87,42 @@ const LoginSignup = () => {
                 value={formData.password}
                 onChange={handleChange}
             />
+            <input
+                type="text"
+                placeholder='Numer telefonu'
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                placeholder='Ulica'
+                name="street"
+                value={formData.street}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                placeholder='Miasto'
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                placeholder='Kod pocztowy'
+                name="postalCode"
+                value={formData.postalCode}
+                onChange={handleChange}
+            />
           </div>
           <button onClick={handleRegistration}>Kontynuuj</button>
           <p className="loginsignup-login">
             Masz już konto?
-            <Link style={{textDecoration: 'none'}} to='/logowanie'>
+            <Link style={{ textDecoration: 'none' }} to='/logowanie'>
               <span>Zaloguj się</span>
             </Link>
           </p>
-          <div className="loginsignup-agree">
-            <input type="checkbox" name='' id='' />
-            <p>Kontynuując, zgadzam się z polityką prywatności i warunkami użytkowania</p>
-          </div>
         </div>
       </div>
   );

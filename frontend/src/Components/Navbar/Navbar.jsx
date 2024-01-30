@@ -8,7 +8,14 @@ const Navbar = () => {
 
   const [menu,setMenu] = useState("str");
   const {getTotalCartItems} = useContext(ShopContext);
-  
+    const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('accessToken')); // Dodany stan zalogowaniaconst { getTotalCartItems } = useContext(ShopContext);
+    const handleLogout = () => {
+        // Dodaj logikę do wylogowania użytkownika
+        // Na przykład, zresetuj stan zalogowania i usuń token z localStorage
+        setIsLoggedIn(false);
+        localStorage.removeItem('accessToken');
+    };
+
   return (
     <div className='navbar'>
         <div className="nav-logo">
@@ -23,9 +30,15 @@ const Navbar = () => {
             <li onClick={() => {setMenu("zasilacze")}}><Link style={{textDecoration: 'none'}} to='/Zasilacze'><p>Zasilacze</p></Link>{menu==="zasilacze"?<hr/>:<></>}</li>
         </ul>
         <div className="nav-login-cart">
-            <Link  to='/Login'><button>Login</button></Link>
-            <Link  to='/Koszyk'><img src={cart_icon} alt="" /></Link>
-            <div className="nav-cart-count">{getTotalCartItems()}</div>
+            {/* Zmieniony warunek renderowania przycisku Login/Logout */}
+            {isLoggedIn ? (
+                <button onClick={handleLogout}>Logout</button>
+            ) : (
+                <Link to='/Login'>
+                    <button>Login</button>
+                </Link>
+            )}
+            <Link to='/Koszyk'><img src={cart_icon} alt=""/></Link>
         </div>
     </div>
   )

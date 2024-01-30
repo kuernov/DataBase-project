@@ -32,9 +32,6 @@ const ShopCategory = (props) => {
                 <p>
                     <span>Showing 1-12</span> out of {products.length} products
                 </p>
-                <div className="shopcategory-sort">
-                    Sort by <img src={dropdown_icon} alt="" />
-                </div>
             </div>
             <div className="shopcategory-products">
                 {Array.isArray(products) && products.map((item, i) => (
